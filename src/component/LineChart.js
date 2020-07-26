@@ -2,9 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Line } from "react-chartjs-2";
 
-function LineChart({ state }) {
-  const labelAsVote = state.map(e => +e.points);
-  const labelAsId = state.map(e => +e.objectID);
+export const LineChart = ({ state }) => {
+  const labelAsVote = state && state.map(e => +e.points);
+  const labelAsId = state && state.map(e => +e.objectID);
   console.log(labelAsVote);
   console.log(labelAsId);
   const data = {
@@ -36,7 +36,7 @@ function LineChart({ state }) {
   };
   return (
     <>
-      {state.length > 0 && (
+      {state && state.length > 0 && (
         <>
           <Line height={100} width={600} data={data} options={options} />
           <div style={{ textAlign: "center" }}>
@@ -46,7 +46,7 @@ function LineChart({ state }) {
       )}
     </>
   );
-}
+};
 
 const mapStateToProps = state => {
   return {
