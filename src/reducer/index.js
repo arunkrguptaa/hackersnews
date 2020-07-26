@@ -1,7 +1,6 @@
 const initialState = {
   article: [],
-  loading: true,
-  page: 0
+  loading: true
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,11 +11,31 @@ const reducer = (state = initialState, action) => {
         loading: true
       };
     case "SET_ARTICLE":
-      console.log(state);
       return {
         ...state,
         article: action.payload,
         loading: false
+      };
+    case "DEL_ARTICLE":
+      const localData = localStorage.getItem("hide")
+        ? `${localStorage.getItem("hide")},${action.payload}`
+        : `${action.payload}`;
+      localStorage.setItem("hide", localData);
+      return {
+        ...state,
+        article: state.article.filter(e => e.objectID !== action.payload)
+      };
+    case "SET_UPVOTE":
+      localStorage.setItem(action.payload.id, action.payload.point);
+      const newArticle = state.article.map(e => {
+        if (e.objectID === action.payload.id) {
+          e.points = action.payload.point;
+        }
+        return e;
+      });
+      return {
+        ...state,
+        article: newArticle
       };
     default:
       return state;
