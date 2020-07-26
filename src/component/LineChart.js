@@ -36,10 +36,14 @@ function LineChart({ state }) {
   };
   return (
     <>
-      <Line height={100} width={600} data={data} options={options} />
-      <div style={{ textAlign: "center" }}>
-        <b>ID</b>
-      </div>
+      {state.length > 0 && (
+        <>
+          <Line height={100} width={600} data={data} options={options} />
+          <div style={{ textAlign: "center" }}>
+            <b>ID</b>
+          </div>
+        </>
+      )}
     </>
   );
 }
